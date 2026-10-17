@@ -1,12 +1,12 @@
 {
   "domain": "gok_smartbox",
   "name": "GOK SmartBox",
-  "codeowners": ["@richardstevens"],
+  "codeowners": ["@rstcologne"],
   "config_flow": true,
-  "documentation": "https://github.com/OWNER/ha-gok-smartbox",
+  "documentation": "https://github.com/rstcologne/ha-gok-smartbox",
   "integration_type": "device",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/OWNER/ha-gok-smartbox/issues",
+  "issue_tracker": "https://github.com/rstcologne/ha-gok-smartbox/issues",
   "requirements": [],
   "version": "0.1.0"
 }
