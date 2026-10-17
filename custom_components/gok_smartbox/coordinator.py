@@ -50,4 +50,6 @@ class GokSmartboxCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             raise UpdateFailed("No measurements returned")
         # Oldest -> newest; take the most recent by parsed timestamp, as string
         # comparison breaks if the API ever mixes formats (e.g. "Z" vs "+00:00").
-        return max(measurements, key=_timestamp_key)
+        # Also expose the (mostly static) tank settings for config sensors.
+        tank = (data.get("settings") or {}).get("tank") or {}
+        return {"measurement": max(measurements, key=_timestamp_key), "tank": tank}

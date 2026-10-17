@@ -30,10 +30,10 @@
   "entity": {
     "sensor": {
       "volume": {
-        "name": "Volumen"
+        "name": "Füllstand"
       },
       "fill_level": {
-        "name": "Füllstand"
+        "name": "Füllstand (%)"
       },
       "height": {
         "name": "Flüssigkeitshöhe"
@@ -43,6 +43,15 @@
       },
       "last_reading": {
         "name": "Letzte Messung"
+      },
+      "total_volume": {
+        "name": "Gesamtvolumen"
+      },
+      "total_height": {
+        "name": "Gesamthöhe"
+      },
+      "filling_limit": {
+        "name": "Befüllungsgrenze"
       }
     }
   }

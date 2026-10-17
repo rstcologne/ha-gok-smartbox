@@ -26,11 +26,14 @@
   },
   "entity": {
     "sensor": {
-      "volume": { "name": "Volume" },
+      "volume": { "name": "Tank content" },
       "fill_level": { "name": "Fill level" },
       "height": { "name": "Liquid height" },
       "refill_capacity": { "name": "Refill capacity" },
-      "last_reading": { "name": "Last reading" }
+      "last_reading": { "name": "Last reading" },
+      "total_volume": { "name": "Total volume" },
+      "total_height": { "name": "Total height" },
+      "filling_limit": { "name": "Filling limit" }
     }
   }
 }

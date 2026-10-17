@@ -139,6 +139,30 @@ the most recent reading is the last element.
 |---|---|---|
 | `key` | string | Device MAC, 12 hex chars, as sent in the request. |
 | `measurements` | array | History of readings, oldest first. |
+| `settings` | object | Device and tank configuration (see below). |
+
+### `settings.tank`
+
+| Field | Type | Notes |
+|---|---|---|
+| `setupDate` | string | ISO 8601, when the tank was configured. |
+| `hvPairs` | array | Height/volume calibration pairs `[{"height": m, "volume": L}]`; the largest pair is the tank's total capacity. |
+| `fillingLimit` | number | Configured maximum fill level, percent (e.g. `95`). Note: `max volume × fillingLimit` matches the constant `volume + refillVolume` seen in measurements. |
+| `tankShape` | number | Index into the tank-shapes enum below (observed `0`). |
+| `medium` | object | `{"type": <medium-type enum index>, "value": <density, kg/m³>}` (observed `{"type": 0, "value": 845}` ≈ heating oil). |
+
+### `settings.device`
+
+| Field | Type | Notes |
+|---|---|---|
+| `name` | string | Device name, default `SB_<MAC>`. |
+| `unit` | number | Display-unit index (`0`=LITER, `1`=PERCENT, `2`=METER — inferred from enum order). |
+| `interval` | number | Measuring-interval index (`0`=MINUTELY, `1`=HOURLY, `2`=DAILY, … — inferred from enum order). |
+| `language` | number | Language index (observed `0`). |
+| `timestamp` | string | ISO 8601, last settings change. |
+| `mac` | string | Device MAC. |
+
+Enum indices are inferred to map to the enum lists below in declaration order; verify against a device with non-default settings if you rely on them.
 
 ### Each `measurements[]` entry
 

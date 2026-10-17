@@ -34,6 +34,19 @@ class GokSensorDescription(SensorEntityDescription):
     value_fn: Callable[[dict[str, Any]], Any]
 
 
+def _max_hv_value(data: dict[str, Any], key: str) -> float | None:
+    """Largest value of `key` across the tank's height/volume calibration pairs.
+
+    The last/largest hvPair represents the tank's total capacity.
+    """
+    values = [
+        pair[key]
+        for pair in data["tank"].get("hvPairs") or []
+        if isinstance(pair.get(key), (int, float))
+    ]
+    return max(values) if values else None
+
+
 SENSORS: tuple[GokSensorDescription, ...] = (
     GokSensorDescription(
         key="volume",
@@ -41,7 +54,7 @@ SENSORS: tuple[GokSensorDescription, ...] = (
         device_class=SensorDeviceClass.VOLUME_STORAGE,
         native_unit_of_measurement=UnitOfVolume.LITERS,
         state_class=SensorStateClass.MEASUREMENT,
-        value_fn=lambda m: m.get("volume"),
+        value_fn=lambda d: d["measurement"].get("volume"),
     ),
     GokSensorDescription(
         key="percent",
@@ -49,7 +62,7 @@ SENSORS: tuple[GokSensorDescription, ...] = (
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         suggested_display_precision=0,
-        value_fn=lambda m: m.get("percent"),
+        value_fn=lambda d: d["measurement"].get("percent"),
     ),
     GokSensorDescription(
         key="battery",
@@ -57,7 +70,7 @@ SENSORS: tuple[GokSensorDescription, ...] = (
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda m: m.get("battery"),
+        value_fn=lambda d: d["measurement"].get("battery"),
     ),
     GokSensorDescription(
         key="height",
@@ -67,23 +80,49 @@ SENSORS: tuple[GokSensorDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=2,
-        value_fn=lambda m: m.get("height"),
+        value_fn=lambda d: d["measurement"].get("height"),
     ),
     GokSensorDescription(
         key="refill_capacity",
         translation_key="refill_capacity",
         device_class=SensorDeviceClass.VOLUME_STORAGE,
         native_unit_of_measurement=UnitOfVolume.LITERS,
-        value_fn=lambda m: m.get("refillVolume"),
+        value_fn=lambda d: d["measurement"].get("refillVolume"),
     ),
     GokSensorDescription(
         key="last_reading",
         translation_key="last_reading",
         device_class=SensorDeviceClass.TIMESTAMP,
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda m: dt_util.parse_datetime(m["timestamp"])
-        if m.get("timestamp")
+        value_fn=lambda d: dt_util.parse_datetime(d["measurement"]["timestamp"])
+        if d["measurement"].get("timestamp")
         else None,
+    ),
+    GokSensorDescription(
+        key="total_volume",
+        translation_key="total_volume",
+        device_class=SensorDeviceClass.VOLUME_STORAGE,
+        native_unit_of_measurement=UnitOfVolume.LITERS,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda d: _max_hv_value(d, "volume"),
+    ),
+    GokSensorDescription(
+        key="total_height",
+        translation_key="total_height",
+        device_class=SensorDeviceClass.DISTANCE,
+        native_unit_of_measurement=UnitOfLength.METERS,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=2,
+        value_fn=lambda d: _max_hv_value(d, "height"),
+    ),
+    GokSensorDescription(
+        key="filling_limit",
+        translation_key="filling_limit",
+        native_unit_of_measurement=PERCENTAGE,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda d: d["tank"].get("fillingLimit"),
     ),
 )
 
