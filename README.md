@@ -4,9 +4,18 @@ Custom integration for GOK SmartBox tank-level devices (cloud polling).
 
 ## Installation (HACS)
 
-1. HACS → Integrations → ⋮ → Custom repositories → add this repository, category **Integration**.
-2. Install **GOK SmartBox** and restart Home Assistant.
-3. Settings → Devices & Services → Add Integration → **GOK SmartBox**.
+This integration is not in the HACS default store, so add it as a custom repository:
+
+1. In Home Assistant, open **HACS** → **Integrations**.
+2. Click the **⋮** menu (top right) → **Custom repositories**.
+3. In the **Repository** field, paste:
+   ```
+   https://github.com/rstcologne/ha-gok-smartbox
+   ```
+4. Set **Category** to **Integration** and click **Add**.
+5. Back in HACS, search for **GOK SmartBox**, open it and click **Download**.
+6. Restart Home Assistant.
+7. Go to **Settings** → **Devices & Services** → **Add Integration** and search for **GOK SmartBox**.
 
 ## Configuration
 
