@@ -1,0 +1,36 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "GOK SmartBox",
+        "description": "Enter the full text of the QR code on the device. Choose the same measuring interval that is configured on the device.",
+        "data": {
+          "device_id": "QR code string",
+          "interval": "Polling interval"
+        }
+      }
+    },
+    "error": {
+      "invalid_device_id": "The QR code string must start with 12 hexadecimal characters.",
+      "device_not_found": "No device with this ID was found.",
+      "cannot_connect": "Could not connect to the GOK cloud."
+    },
+    "abort": {
+      "already_configured": "This device is already configured."
+    }
+  },
+  "selector": {
+    "interval": {
+      "options": { "HOURLY": "Hourly", "DAILY": "Daily" }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "volume": { "name": "Volume" },
+      "fill_level": { "name": "Fill level" },
+      "height": { "name": "Liquid height" },
+      "refill_volume": { "name": "Last refill" },
+      "last_reading": { "name": "Last reading" }
+    }
+  }
+}
