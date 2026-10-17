@@ -29,7 +29,7 @@
       "volume": { "name": "Volume" },
       "fill_level": { "name": "Fill level" },
       "height": { "name": "Liquid height" },
-      "refill_volume": { "name": "Last refill" },
+      "refill_capacity": { "name": "Refill capacity" },
       "last_reading": { "name": "Last reading" }
     }
   }

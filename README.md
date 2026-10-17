@@ -24,4 +24,4 @@ This integration is not in the HACS default store, so add it as a custom reposit
 
 ## Entities
 
-Volume, fill level, battery, liquid height, last refill, last reading. Read-only; the device settings endpoint is not supported yet. See `specs/GOK_query.md`.
+Volume, fill level, battery, liquid height, refill capacity (remaining permissible fill amount), last reading. Read-only; the device settings endpoint is not supported yet. See `specs/GOK_query.md`.

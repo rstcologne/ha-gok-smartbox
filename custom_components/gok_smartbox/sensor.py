@@ -70,8 +70,8 @@ SENSORS: tuple[GokSensorDescription, ...] = (
         value_fn=lambda m: m.get("height"),
     ),
     GokSensorDescription(
-        key="refill_volume",
-        translation_key="refill_volume",
+        key="refill_capacity",
+        translation_key="refill_capacity",
         device_class=SensorDeviceClass.VOLUME_STORAGE,
         native_unit_of_measurement=UnitOfVolume.LITERS,
         value_fn=lambda m: m.get("refillVolume"),

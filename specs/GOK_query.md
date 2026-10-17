@@ -145,7 +145,7 @@ the most recent reading is the last element.
 | Field | Type | Unit / meaning |
 |---|---|---|
 | `volume` | number | Current tank content, **liters**. |
-| `refillVolume` | number | Volume added since the previous reading, liters (0 if no refill occurred). |
+| `refillVolume` | number | Remaining volume that may still be added to fill the tank to its permissible maximum, liters ("zulässige Befüllmenge" in the official app). In observed data `volume + refillVolume` is constant (= max permissible capacity). |
 | `battery` | number | Device battery level, **percent** (0–100). |
 | `percent` | number | Fill level, **percent** of configured max capacity. |
 | `height` | number | Measured liquid height, **meters**. |

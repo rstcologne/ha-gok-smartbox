@@ -38,8 +38,8 @@
       "height": {
         "name": "Flüssigkeitshöhe"
       },
-      "refill_volume": {
-        "name": "Letzte Befüllung"
+      "refill_capacity": {
+        "name": "Zulässige Befüllmenge"
       },
       "last_reading": {
         "name": "Letzte Messung"
