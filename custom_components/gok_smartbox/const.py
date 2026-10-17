@@ -11,8 +11,9 @@ API_KEY = "slgep8fCk-LSQ1JvWIVP82lW_Xafx7g8b7j-5qqPrd3RAzFuo8uSOA=="
 CONF_DEVICE_ID = "device_id"
 CONF_INTERVAL = "interval"
 
-INTERVAL_HOURLY = "HOURLY"
-INTERVAL_DAILY = "DAILY"
+# Values double as selector option keys and must match [a-z0-9-_]+ for hassfest.
+INTERVAL_HOURLY = "hourly"
+INTERVAL_DAILY = "daily"
 INTERVALS: dict[str, timedelta] = {
     INTERVAL_HOURLY: timedelta(hours=1),
     INTERVAL_DAILY: timedelta(days=1),

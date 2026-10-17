@@ -22,8 +22,8 @@
   "selector": {
     "interval": {
       "options": {
-        "HOURLY": "Stündlich",
-        "DAILY": "Täglich"
+        "hourly": "Stündlich",
+        "daily": "Täglich"
       }
     }
   },
