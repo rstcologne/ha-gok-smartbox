@@ -1,6 +1,7 @@
 """Data update coordinator for GOK SmartBox."""
 from __future__ import annotations
 
+from datetime import UTC, datetime
 import logging
 from typing import Any
 
@@ -8,11 +9,18 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from homeassistant.util import dt as dt_util
 
 from .api import GokApiError, GokSmartboxApi
 from .const import CONF_DEVICE_ID, CONF_INTERVAL, DEFAULT_INTERVAL, DOMAIN, INTERVALS
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def _timestamp_key(measurement: dict[str, Any]) -> datetime:
+    """Sort key for measurements: parsed timestamp, aware minimum as fallback."""
+    parsed = dt_util.parse_datetime(measurement.get("timestamp") or "")
+    return parsed if parsed is not None else datetime.min.replace(tzinfo=UTC)
 
 
 class GokSmartboxCoordinator(DataUpdateCoordinator[dict[str, Any]]):
@@ -40,5 +48,6 @@ class GokSmartboxCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         measurements = data.get("measurements") or []
         if not measurements:
             raise UpdateFailed("No measurements returned")
-        # Oldest -> newest; take the most recent by timestamp to be safe.
-        return max(measurements, key=lambda m: m.get("timestamp", ""))
+        # Oldest -> newest; take the most recent by parsed timestamp, as string
+        # comparison breaks if the API ever mixes formats (e.g. "Z" vs "+00:00").
+        return max(measurements, key=_timestamp_key)
